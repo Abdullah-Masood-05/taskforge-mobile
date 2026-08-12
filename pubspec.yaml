@@ -1,7 +1,7 @@
 name: taskforge_mobile
 description: TaskForge for Android and iOS. Multi-tenant project management on the go.
 publish_to: "none"
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
