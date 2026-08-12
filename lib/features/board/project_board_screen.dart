@@ -320,7 +320,7 @@ class _BoardTab extends ConsumerWidget {
             icon: Icons.view_kanban_outlined,
             title: 'No columns yet',
             message:
-                'Add your first workflow stage — e.g. To do, In progress, Done.',
+                'Add your first workflow stage, such as To do, In progress or Done.',
             action: TFButton(
                 label: 'Add column',
                 icon: Icons.add_rounded,

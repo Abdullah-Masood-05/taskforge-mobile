@@ -93,17 +93,22 @@ class AuthController extends Notifier<AuthState> {
     state = AuthState(status: AuthStatus.signedIn, user: user);
   }
 
+  /// Signs out locally right away; revoking the refresh token on the server
+  /// happens in the background so a sleeping server can't block sign out.
   Future<void> logout() async {
     final storage = ref.read(tokenStorageProvider);
     final refresh = storage.refresh;
-    if (refresh != null) {
-      try {
-        await _repo.logout(refresh);
-      } catch (_) {}
-    }
+    final access = storage.access;
+    final repo = _repo;
     await storage.clear();
     ref.read(currentOrgProvider.notifier).state = null;
     state = const AuthState(status: AuthStatus.signedOut);
+    if (refresh != null) {
+      repo
+          .logout(refresh, access: access)
+          .timeout(const Duration(seconds: 20))
+          .ignore();
+    }
   }
 }
 

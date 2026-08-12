@@ -45,7 +45,7 @@ class ApiError implements Exception {
         code: 'network_error',
         message: e.type == DioExceptionType.connectionTimeout ||
                 e.type == DioExceptionType.receiveTimeout
-            ? 'The server is taking a while to respond. It may be waking up — try again in a moment.'
+            ? 'The server is still waking up. This can take about a minute after a quiet spell, so try again shortly.'
             : 'Unable to reach TaskForge. Check your connection.',
       );
     }

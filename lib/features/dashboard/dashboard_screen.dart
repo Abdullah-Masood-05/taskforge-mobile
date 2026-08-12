@@ -237,7 +237,7 @@ class _WelcomeBanner extends StatelessWidget {
         '${_days[now.weekday - 1]} · ${_months[now.month - 1]} ${now.day}, ${now.year}';
     final count = orgCount ?? 0;
     final sub = count > 0
-        ? 'Your terminal for project orchestration — operational across $count organization${count == 1 ? '' : 's'}.'
+        ? 'Your terminal for project orchestration, running across $count organization${count == 1 ? '' : 's'}.'
         : 'Your terminal for project orchestration. Create your first organization to get started.';
 
     return Container(

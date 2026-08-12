@@ -295,7 +295,7 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
           Icons.hourglass_top_rounded,
           TF.brand,
           'Generating…',
-          'Building your report — hang tight.'
+          'Building your report. This can take a minute.'
         ),
     };
 

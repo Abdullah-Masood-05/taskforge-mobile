@@ -213,7 +213,7 @@ class _BrandFooter extends StatelessWidget {
         child: Text('TaskForge',
             style: TFText.sans(size: 13, weight: FontWeight.w700)),
       ),
-      Text(' — Built for modern teams',
+      Text(' · Built for modern teams',
           style: TFText.sans(size: 13, color: TF.textDisabled)),
     ]);
   }

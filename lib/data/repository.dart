@@ -35,8 +35,13 @@ class TaskForgeRepository {
           },
           skipAuth: true) as Map);
 
-  Future<void> logout(String refresh) =>
-      _api.post('/auth/logout/', body: {'refresh': refresh});
+  /// Blacklists [refresh] server-side. [access] is passed explicitly because
+  /// sign out clears local tokens before this request is sent.
+  Future<void> logout(String refresh, {String? access}) => _api.post(
+        '/auth/logout/',
+        body: {'refresh': refresh},
+        headers: {if (access != null) 'Authorization': 'Bearer $access'},
+      );
 
   Future<User> me() async => User.fromJson(
       Map<String, dynamic>.from(await _api.get('/auth/me/') as Map));

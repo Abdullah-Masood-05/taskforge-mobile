@@ -317,8 +317,8 @@ class _Hero extends StatelessWidget {
           .slideY(begin: 0.15, end: 0, curve: Curves.easeOutCubic),
       const SizedBox(height: 14),
       Text(
-        'Organize work across teams with a Kanban board, real-time activity, and live project analytics — '
-        'on the web, the desktop, and in your pocket.',
+        'Organize work across teams with a Kanban board, live activity and project analytics. '
+        'TaskForge runs on the web, on the desktop and on your phone.',
         style: TFText.body(color: TF.textMuted),
       )
           .animate()
