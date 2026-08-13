@@ -66,7 +66,10 @@ class _TFTextFieldState extends State<TFTextField> {
           ],
           TextFormField(
             controller: widget.controller,
-            enabled: widget.enabled,
+            // readOnly rather than enabled: false, because a disabled field
+            // also ignores taps on its suffix icon (the password toggle).
+            readOnly: !widget.enabled,
+            showCursor: widget.enabled,
             obscureText: _hidden,
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
@@ -77,7 +80,9 @@ class _TFTextFieldState extends State<TFTextField> {
             minLines: widget.minLines,
             autofocus: widget.autofocus,
             autofillHints: widget.autofillHints,
-            style: TFText.sans(size: 15),
+            style: TFText.sans(
+                size: 15,
+                color: widget.enabled ? TF.textPrimary : TF.textMuted),
             decoration: InputDecoration(
               hintText: widget.hint,
               errorText: widget.errorText,

@@ -15,7 +15,9 @@ class TaskForgeRepository {
   /// Returns `{access, refresh, user}`.
   Future<Map<String, dynamic>> login(String email, String password) async =>
       Map<String, dynamic>.from(await _api.post('/auth/login/',
-          body: {'email': email, 'password': password}, skipAuth: true) as Map);
+          body: {'email': email, 'password': password},
+          skipAuth: true,
+          retry: true) as Map);
 
   /// Returns `{message, user, tokens: {access, refresh}}`.
   Future<Map<String, dynamic>> register({

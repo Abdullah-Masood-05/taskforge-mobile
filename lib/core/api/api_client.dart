@@ -164,10 +164,11 @@ class ApiClient {
     return c.future;
   }
 
-  Options _opts(String? org, bool skipAuth, [Map<String, String>? headers]) {
+  Options _opts(String? org, bool skipAuth,
+      [Map<String, String>? headers, bool retry = false]) {
     return Options(
       headers: {...?headers, if (org != null) 'X-Organization-Slug': org},
-      extra: {'skipAuth': skipAuth},
+      extra: {'skipAuth': skipAuth, 'retry': retry},
     );
   }
 
@@ -186,13 +187,15 @@ class ApiClient {
       _send(() => _dio.get<dynamic>(path,
           queryParameters: _clean(query), options: _opts(org, skipAuth)));
 
+  /// [retry] marks a POST as safe to repeat while the server wakes up.
   Future<dynamic> post(String path,
           {Object? body,
           String? org,
           bool skipAuth = false,
+          bool retry = false,
           Map<String, String>? headers}) =>
       _send(() => _dio.post<dynamic>(path,
-          data: body, options: _opts(org, skipAuth, headers)));
+          data: body, options: _opts(org, skipAuth, headers, retry)));
 
   Future<dynamic> patch(String path, {Object? body, String? org}) => _send(
       () => _dio.patch<dynamic>(path, data: body, options: _opts(org, false)));
