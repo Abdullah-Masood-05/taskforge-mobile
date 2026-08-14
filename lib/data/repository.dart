@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/api/api_client.dart';
+import '../core/api/api_error.dart';
 import 'models.dart';
 
 /// Every endpoint the web app calls, typed for Dart. Org-scoped calls take the
@@ -13,11 +14,27 @@ class TaskForgeRepository {
   // ── Auth ────────────────────────────────────────────────────────────────────
 
   /// Returns `{access, refresh, user}`.
-  Future<Map<String, dynamic>> login(String email, String password) async =>
-      Map<String, dynamic>.from(await _api.post('/auth/login/',
-          body: {'email': email, 'password': password},
-          skipAuth: true,
-          retry: true) as Map);
+  ///
+  /// The sign-in form stays locked until this returns, so it gets a hard
+  /// ceiling. Without one, a stalled connection keeps the form locked for
+  /// minutes (receive timeout multiplied by retries).
+  Future<Map<String, dynamic>> login(String email, String password) async {
+    final data = await _api
+        .post('/auth/login/',
+            body: {'email': email, 'password': password},
+            skipAuth: true,
+            retry: true)
+        .timeout(
+          const Duration(seconds: 40),
+          onTimeout: () => throw ApiError(
+            status: 0,
+            code: 'timeout',
+            message:
+                'The server did not answer in time. Check your connection and try again.',
+          ),
+        );
+    return Map<String, dynamic>.from(data as Map);
+  }
 
   /// Returns `{message, user, tokens: {access, refresh}}`.
   Future<Map<String, dynamic>> register({
