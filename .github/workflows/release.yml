@@ -73,6 +73,8 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: TaskForge Mobile ${{ env.TAG }}
+          # Tags with a hyphen (for example v1.0.2-personal-oneplus-live-3) are test builds.
+          prerelease: ${{ contains(env.TAG, '-') }}
           body_path: ${{ env.NOTES_PATH }}
           generate_release_notes: true
           files: dist/*
